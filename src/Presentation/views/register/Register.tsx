@@ -6,7 +6,7 @@ import useViewModel from './ViewModel';
 
 export const RegisterScreen = () => {
 
-    const { email, password, repeatPassword, phone, location, ubication, onChange , register} = useViewModel();
+    const { email, password, repeatPassword, phone, direction, onChange , register} = useViewModel();
 
 
     return (
@@ -70,9 +70,9 @@ export const RegisterScreen = () => {
                     placeholder='Localidad'
                     keyboard='default'
                     secureTextEntry={false}
-                    property='location'
+                    property='direction'
                     onChangeText={onChange}
-                    value={location}
+                    value={direction}
                 />
 
                 <View style={{ marginTop: 30 }}>
