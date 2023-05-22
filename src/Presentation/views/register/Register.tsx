@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import CustomTextInput from '../../components/CustomTextInput';
 import { RounderButton } from '../../components/RounderButton';
 import useViewModel from './ViewModel';
@@ -21,66 +21,70 @@ export const RegisterScreen = () => {
             </View>
 
             <View style={styles.form}>
-                <Text style={styles.formText}>REGISTRARSE</Text>
 
-                <CustomTextInput
-                    image={require('../../../../assets/email.png')}
-                    placeholder='Correo electronico'
-                    keyboard='email-address'
-                    secureTextEntry={false}
-                    property='email'
-                    onChangeText={onChange}
-                    value={email}
-                />
+                <ScrollView>
 
-                <CustomTextInput
-                    image={require('../../../../assets/block.png')}
-                    placeholder='password'
-                    keyboard='default'
-                    secureTextEntry={true}
-                    property='password'
-                    onChangeText={onChange}
-                    value={password}
-                />
+                    <Text style={styles.formText}>REGISTRARSE</Text>
 
-                <CustomTextInput
-                    image={require('../../../../assets/block.png')}
-                    placeholder='Repetir password'
-                    keyboard='default'
-                    secureTextEntry={true}
-                    property='repeatPassword'
-                    onChangeText={onChange}
-                    value={repeatPassword}
-                />
-
-                <CustomTextInput
-
-                    image={require('../../../../assets/phone.png')}
-                    placeholder='Telefono'
-                    keyboard='phone-pad'
-                    secureTextEntry={false}
-                    property='phone'
-                    onChangeText={onChange}
-                    value={phone}
-                />
-
-                <CustomTextInput
-
-                    image={require('../../../../assets/location.png')}
-                    placeholder='Localidad'
-                    keyboard='default'
-                    secureTextEntry={false}
-                    property='direction'
-                    onChangeText={onChange}
-                    value={direction}
-                />
-
-                <View style={{ marginTop: 30 }}>
-                    <RounderButton
-                        text='ingresar'
-                        onPress={() => register()}
+                    <CustomTextInput
+                        image={require('../../../../assets/email.png')}
+                        placeholder='Correo electronico'
+                        keyboard='email-address'
+                        secureTextEntry={false}
+                        property='email'
+                        onChangeText={onChange}
+                        value={email}
                     />
-                </View>
+
+                    <CustomTextInput
+                        image={require('../../../../assets/block.png')}
+                        placeholder='password'
+                        keyboard='default'
+                        secureTextEntry={true}
+                        property='password'
+                        onChangeText={onChange}
+                        value={password}
+                    />
+
+                    <CustomTextInput
+                        image={require('../../../../assets/block.png')}
+                        placeholder='Repetir password'
+                        keyboard='default'
+                        secureTextEntry={true}
+                        property='repeatPassword'
+                        onChangeText={onChange}
+                        value={repeatPassword}
+                    />
+
+                    <CustomTextInput
+
+                        image={require('../../../../assets/phone.png')}
+                        placeholder='Telefono'
+                        keyboard='phone-pad'
+                        secureTextEntry={false}
+                        property='phone'
+                        onChangeText={onChange}
+                        value={phone}
+                    />
+
+                    <CustomTextInput
+
+                        image={require('../../../../assets/location.png')}
+                        placeholder='Localidad'
+                        keyboard='default'
+                        secureTextEntry={false}
+                        property='direction'
+                        onChangeText={onChange}
+                        value={direction}
+                    />
+
+                    <View style={{ marginTop: 30 }}>
+                        <RounderButton
+                            text='ingresar'
+                            onPress={() => register()}
+                        />
+                    </View>
+                </ScrollView>
             </View>
         </View>
     );
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
     },
     form: {
         width: '100%',
-        height: '74%',
+        height: '72%',
         backgroundColor: 'white',
         position: "absolute",
         bottom: 0,
