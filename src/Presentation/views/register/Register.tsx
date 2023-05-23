@@ -1,14 +1,19 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import React, {useEffect} from 'react'
+import { StyleSheet, Text, View, Image, ScrollView, ToastAndroid } from 'react-native';
 import CustomTextInput from '../../components/CustomTextInput';
 import { RounderButton } from '../../components/RounderButton';
 import useViewModel from './ViewModel';
 
 export const RegisterScreen = () => {
 
-    const { name, email, password, repeatPassword, phone, direction, onChange , register} = useViewModel();
+    const { name, email, password, confirmPassword, phone, direction, errorMessage, onChange , register} = useViewModel();
 
-
+    useEffect(() => {
+        if (errorMessage != ''){
+        ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+        }
+    }, [errorMessage])
+    
     return (
         <View style={styles.container}>
             <Image style={styles.imageBackgroud} source={require('../../../../assets/perro_gato.png')} />
@@ -58,12 +63,12 @@ export const RegisterScreen = () => {
 
                     <CustomTextInput
                         image={require('../../../../assets/block.png')}
-                        placeholder='Repetir password'
+                        placeholder='Confirmar contraseña'
                         keyboard='default'
                         secureTextEntry={true}
-                        property='repeatPassword'
+                        property='confirmPassword'
                         onChangeText={onChange}
-                        value={repeatPassword}
+                        value={confirmPassword}
                     />
 
                     <CustomTextInput
@@ -88,11 +93,8 @@ export const RegisterScreen = () => {
                         value={direction}
                     />
 
-                    <View style={{ marginTop: 30 }}>
-                        <RounderButton
-                            text='ingresar'
-                            onPress={() => register()}
-                        />
+                    <View style={{ marginTop: 30, marginBottom: 10 }}>
+                        <RounderButton text='Ingresar' onPress={() => register()}/>
                     </View>
                 </ScrollView>
             </View>
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     },
     form: {
         width: '100%',
-        height: '72%',
+        height: '70%',
         backgroundColor: 'white',
         position: "absolute",
         bottom: 0,
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 10,
+        marginTop: 4,
         fontSize: 20,
     },
     formText: {

@@ -3,7 +3,7 @@ export interface User {
     name:           string;
     email:          string;
     password:       string;
-    repeatPassword: string;
+    confirmPassword: string;
     phone:          string;
     direction:      string;
 }

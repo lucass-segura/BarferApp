@@ -6,12 +6,12 @@ import { RegisterAuthUserCase } from '../../../Domain/useCases/auth/RegisterAuth
 export const RegisterViewModel = () => {
 
 
-const [errorMessage, seterrorMessage] = useState('')
+const [errorMessage, setErrorMessage] = useState('')
 const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
-    repeatPassword: '',
+    confirmPassword: '',
     phone: '',
     direction: '',
 
@@ -25,12 +25,35 @@ const [values, setValues] = useState({
  }
 
  const register = async () => { 
+    if (isValidForm()){
     const response  = await RegisterAuthUserCase(values);
     console.log('RESULT: ' + JSON.stringify(response));
- }
+        }
+    }
 
     const isValidForm =(): boolean  => {
         if (values.name === '') {
+            setErrorMessage('Ingresa un nombre.')
+            return false;
+        }
+        if (values.email === '') {
+            setErrorMessage('Ingresa un email valido.')
+            return false;
+        }
+        if (values.password === '') {
+            setErrorMessage('Ingresa una contraseña valida.')
+            return false;
+        }
+        if (values.confirmPassword !== values.password) {
+            setErrorMessage('Las contraseñas no coinciden.')
+            return false;
+        }
+        if (values.phone === '') {
+            setErrorMessage('Ingresa un número de telefono.')
+            return false;
+        }
+        if (values.direction === '') {
+            setErrorMessage('Ingresauna dirección.')
             return false;
         }
         return true;
@@ -39,7 +62,8 @@ const [values, setValues] = useState({
     return{
         ...values,
         onChange,
-        register
+        register,
+        errorMessage
     }
 }
 
