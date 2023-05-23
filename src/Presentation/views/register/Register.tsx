@@ -6,7 +6,7 @@ import useViewModel from './ViewModel';
 
 export const RegisterScreen = () => {
 
-    const { email, password, repeatPassword, phone, direction, onChange , register} = useViewModel();
+    const { name, email, password, repeatPassword, phone, direction, onChange , register} = useViewModel();
 
 
     return (
@@ -25,6 +25,16 @@ export const RegisterScreen = () => {
                 <ScrollView>
 
                     <Text style={styles.formText}>REGISTRARSE</Text>
+
+                    <CustomTextInput
+                        image={require('../../../../assets/email.png')}
+                        placeholder='Nombre'
+                        keyboard='default'
+                        secureTextEntry={false}
+                        property='name'
+                        onChangeText={onChange}
+                        value={name}
+                    />
 
                     <CustomTextInput
                         image={require('../../../../assets/email.png')}

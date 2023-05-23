@@ -4,7 +4,11 @@ import { RegisterAuthUserCase } from '../../../Domain/useCases/auth/RegisterAuth
 
 
 export const RegisterViewModel = () => {
-const [values, setValues] = useState({ 
+
+
+const [errorMessage, seterrorMessage] = useState('')
+const [values, setValues] = useState({
+    name: '',
     email: '',
     password: '',
     repeatPassword: '',
@@ -24,6 +28,13 @@ const [values, setValues] = useState({
     const response  = await RegisterAuthUserCase(values);
     console.log('RESULT: ' + JSON.stringify(response));
  }
+
+    const isValidForm =(): boolean  => {
+        if (values.name === '') {
+            return false;
+        }
+        return true;
+    }
 
     return{
         ...values,
