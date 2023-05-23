@@ -21,9 +21,8 @@ const [values, setValues] = useState({
  }
 
  const register = async () => { 
-    const {result, error} = await RegisterAuthUserCase(values);
-    console.log('RESULT: ' + JSON.stringify(result));
-    console.log('ERROR: ' + error);
+    const response  = await RegisterAuthUserCase(values);
+    console.log('RESULT: ' + JSON.stringify(response));
  }
 
     return{
