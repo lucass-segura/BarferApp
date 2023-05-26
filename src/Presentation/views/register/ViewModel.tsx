@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { ApiBarfer } from '../../../Data/sources/remote/api/ApiBarfer';
 import { RegisterAuthUserCase } from '../../../Domain/useCases/auth/RegisterAuth';
-
+import * as ImagePicker from 'expo-image-picker';
+import { useUserLocal } from '../../hooks/userUserLocal';
 
 export const RegisterViewModel = () => {
 
@@ -14,8 +15,43 @@ const [values, setValues] = useState({
     confirmPassword: '',
     phone: '',
     direction: '',
+    image: '',
 
  });
+
+ const[file, setFile] = useState<ImagePicker.ImagePickerAsset>();
+ const { user, getUserSession } = useUserLocal();
+ 
+ const pickeImage = async () => { 
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        quality: 1
+    });
+
+    if(!result.canceled)
+    {
+        onChange('image', result.assets[0].uri);
+        setFile(result.assets[0]);
+    }
+ }  
+
+
+
+ const takePhoto = async () => { 
+    let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        quality: 1
+    });
+
+    if(!result.canceled)
+    {
+        onChange('image', result.assets[0].uri);
+        setFile(result.assets[0]);
+    }
+ }  
+
 
  const onChange = (property: string, value: string) => {
     setValues({
@@ -63,6 +99,8 @@ const [values, setValues] = useState({
         ...values,
         onChange,
         register,
+        pickeImage,
+        takePhoto,
         errorMessage
     }
 }

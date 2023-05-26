@@ -1,18 +1,26 @@
-import React, {useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, ToastAndroid } from 'react-native';
 import CustomTextInput from '../../components/CustomTextInput';
 import { RounderButton } from '../../components/RounderButton';
 import useViewModel from './ViewModel';
+import * as imagePicker from 'expo-image-picker';
+import { TouchableOpacity } from 'react-native';
+import { ModalPickImage } from '../../components/ModalPickImage';
 
 export const RegisterScreen = () => {
 
-    const { name, email, password, confirmPassword, phone, direction, errorMessage, onChange , register} = useViewModel();
+    const { name, email, image , password, confirmPassword, phone, direction, errorMessage, onChange, register, pickeImage, takePhoto } = useViewModel();
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
-        if (errorMessage != ''){
-        ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+        if (errorMessage != '') {
+            ToastAndroid.show(errorMessage, ToastAndroid.LONG);
         }
     }, [errorMessage])
+
+
+    
+
     
     return (
         <View style={styles.container}>
@@ -21,7 +29,14 @@ export const RegisterScreen = () => {
 
             <View style={styles.logoContainer}>
 
-                <Image style={styles.logoImagen} source={require('../../../../assets/pet.png')} />
+                <TouchableOpacity onPress={()=> setModalVisible(true)}>
+                    {
+                        image  == '' 
+                        ? <Image style={styles.logoImagen} source={require('../../../../assets/pet.png')} />
+                        : <Image style={styles.logoImagen} source={{uri: image}} />
+                    }
+                </TouchableOpacity>
+
                 <Text style={styles.logoText}>Selecciona una imagen de tu mascota</Text>
             </View>
 
@@ -94,10 +109,17 @@ export const RegisterScreen = () => {
                     />
 
                     <View style={{ marginTop: 30, marginBottom: 10 }}>
-                        <RounderButton text='Ingresar' onPress={() => register()}/>
+                        <RounderButton text='Ingresar' onPress={() => register()} />
                     </View>
                 </ScrollView>
             </View>
+
+            <ModalPickImage
+            openGallery={pickeImage}
+            openCamera={pickeImage}
+            modalUseState={modalVisible}
+            setModalUseState={setModalVisible}
+            />
         </View>
     );
 }

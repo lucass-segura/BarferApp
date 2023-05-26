@@ -3,6 +3,9 @@ import { User } from "../entity/User";
 
 export interface AuthRepository {
 
-    register(user: User): Promise <ResponseApiBarfer>
+
+    login(email:string, password:string):Promise<ResponseApiBarfer>;
+    register(user: User): Promise <ResponseApiBarfer>;
+    
 
 }

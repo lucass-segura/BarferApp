@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity } from 'react-native';
 import { RounderButton } from '../../components/RounderButton';
 import { RootStackParamList } from '../../../../App';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import useViewModel from './ViewModel';
 import CustomTextInput from '../../components/CustomTextInput';
 
-export const HomeScreen = () => {
-
-const {email, password, onChange} = useViewModel();
+interface Props extends StackScreenProps<RootStackParamList,'HomeScreen'>{};
 
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+export const HomeScreen = ({navigation, route} : Props) => {
 
+  const { email, password, errorMessage, onChange, login, user } = useViewModel();
+
+
+  useEffect(() => {
+    if (errorMessage !== '') {
+      Alert.alert(errorMessage);
+    }
+  }, [errorMessage])
+
+
+
+  useEffect(() => {
+    if (user?.id !== null && user?.id !== undefined) {
+      navigation.replace('ClientTabsNavigator');
+    }
+  }, [user])
 
 
   return (
@@ -29,34 +43,35 @@ const {email, password, onChange} = useViewModel();
       <View style={styles.form}>
         <Text style={styles.formText}>INGRESE</Text>
 
-      <CustomTextInput
-      image={require('../../../../assets/email.png')}
-      placeholder='Correo electronico'
-      keyboard='email-address'
-      secureTextEntry={false}
-      property='email'
-      onChangeText={onChange}
-      value={email}
-      />
+        <CustomTextInput
+          image={require('../../../../assets/email.png')}
+          placeholder='Correo electronico'
+          keyboard='email-address'
+          secureTextEntry={false}
+          property='email'
+          onChangeText={onChange}
+          value={email}
+        />
 
 
-      <CustomTextInput
-      image={require('../../../../assets/block.png')}
-      placeholder='password'
-      keyboard='default'
-      secureTextEntry={true}
-      property='password'
-      onChangeText={onChange}
-      value={password}
-      />
+        <CustomTextInput
+          image={require('../../../../assets/block.png')}
+          placeholder='password'
+          keyboard='default'
+          secureTextEntry={true}
+          property='password'
+          onChangeText={onChange}
+          value={password}
+        />
 
 
         <View style={{ marginTop: 30 }}>
           <RounderButton
             text='ingresar'
-            onPress={() =>{console.log('email: ' + email);
-                          console.log('password: ' + password);
-          } }
+            onPress={() => {
+              navigation.navigate('ClientTabsNavigator');
+              //login()
+            }}
           />
         </View>
 
